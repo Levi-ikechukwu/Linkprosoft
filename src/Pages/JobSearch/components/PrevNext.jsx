@@ -1,5 +1,5 @@
 
-import next from "../../../assets/images/vector1.svg"
+import next from "../../../assets/images/arrow1.svg"
 import prev from "../../../assets/images/vector2.svg"
 
 const PrevNext = () => {
