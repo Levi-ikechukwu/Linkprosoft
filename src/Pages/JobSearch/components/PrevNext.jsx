@@ -1,13 +1,13 @@
 
 import next from "../../../assets/images/arrow1.svg"
-import prev from "../../../assets/images/vector2.svg"
+import prev from "../../../assets/images/arrow2.svg"
 
 const PrevNext = () => {
   return (
    <>
-        <div className="white select-none bg-white w-[90%] relative left-[100px] flex items-center relative  justify-between h-[90px] align-center">
+        <div className="white select-none bg-white w-[90%] relative left-[100px] flex items-center  justify-between h-[90px] align-center">
             <div><p className="font-Inter text-[15px] font-bold">showing 15 results</p></div>
-            <div className="flex  w-[35%] flex items-center gap-[3%] flex-wrap">
+            <div className=" w-[35%] flex items-center gap-[3%] flex-wrap">
                 <div className="flex align-center justify-center w-[29%] bg-black px-3 py-2 rounded-full">
                     <img src={next} alt="" />
                     <p className="font-Inter font-semibold text-[15px] pl-2 text-white ">Previous</p>
