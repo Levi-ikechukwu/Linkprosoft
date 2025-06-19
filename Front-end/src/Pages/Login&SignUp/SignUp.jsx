@@ -26,13 +26,18 @@ const SignUp = () => {
         const response = await signup({ firstName, lastName, email, password, compName, userType });
         console.log(response);
         if (response.success && response.data === 'employer') {
+            toast.success(response.message);
             navigate('/user-dashboard')
         }
 
         if (response.success && response.data === 'professional') {
+            toast.success(response.message);
             navigate('/employer-dashboard')
         }
 
+        if(!response.success) {
+            toast.warning(response.message);
+        }
     }
 
     const handleShowPassword = () => {
