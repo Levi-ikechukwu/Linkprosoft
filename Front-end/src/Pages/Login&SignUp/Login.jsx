@@ -38,12 +38,18 @@ const Login = () => {
     if (Object.keys(formErrors).length === 0) {
       const res = await login({ email, password });
       if (res.path === 'employer') {
-        navigate("/user-dashboard");
+        setTimeout(() => {
+          navigate("/user-dashboard");
+          setEmail("")
+          setPassword("")
+        }, 2000);
       } else if (res.path === 'professional') {
-        navigate('/employer-dashboard');
+        setTimeout(() => {
+          navigate('/employer-dashboard');
+          setEmail("")
+          setPassword("")
+        }, 2000);
       }
-      setEmail("")
-      setPassword("")
     }
 
   }
