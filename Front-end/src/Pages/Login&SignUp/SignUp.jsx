@@ -27,15 +27,19 @@ const SignUp = () => {
         console.log(response);
         if (response.success && response.data === 'employer') {
             toast.success(response.message);
-            navigate('/user-dashboard')
+            setTimeout(() => {
+                navigate('/user-dashboard')
+            }, 2000);
         }
 
         if (response.success && response.data === 'professional') {
             toast.success(response.message);
-            navigate('/employer-dashboard')
+            setTimeout(() => {
+                navigate('/employer-dashboard')
+            }, 2000);
         }
 
-        if(!response.success) {
+        if (!response.success) {
             toast.warning(response.message);
         }
     }
