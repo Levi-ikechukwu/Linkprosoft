@@ -113,14 +113,6 @@ const SignUp = () => {
 
                                 <div className='w-full'>
                                     <label htmlFor="password" className='block text-gray-700 font-medium mb-1 md:text-[22px] lg:text-[16px]'>Password</label>
-                                    {/* <input
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        className='w-full text-lg lg:text-base px-2 py-1.5 mb-3 border-none rounded-md focus:outline-none focus:ring-2 focus:ring-[#0A66C2] bg-[#f6f6f6]'
-                                    /> */}
 
                                     <div className='flex items-center bg-[#f6f6f6] rounded-md'>
                                         <input type={passwordType} name="password" id="password" required
@@ -129,8 +121,8 @@ const SignUp = () => {
 
                                         <div className='w-[10%] flex items-center pr-2 text-center justify-center py-2'>
                                             {passwordShowing ?
-                                                <FaRegEyeSlash className='text-base' onClick={handleShowPassword} /> :
-                                                <FaRegEye className='text-base' onClick={handleShowPassword} />
+                                                <FaRegEyeSlash className='text-base cursor-pointer' onClick={handleShowPassword} /> :
+                                                <FaRegEye className='text-base cursor-pointer' onClick={handleShowPassword} />
                                             }
                                         </div>
                                     </div>
