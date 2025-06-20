@@ -71,7 +71,11 @@ const UserProvider = ({ children }) => {
 
             localStorage.setItem("token", token);
             setUser(user);
-            toast.success("Login successful!");
+            if(user){
+                toast.success("Login successful!");
+            } else{
+                toast.warning('Invalid email or password');
+            }
 
             if (user.userType === 'employer') {
                 return { path: 'employer' }
