@@ -4,8 +4,6 @@ import User from "../../model/user.js";
 
 export const registerUser = async (req, res) => {
   const { firstName, lastName, email, password, compName, userType } = req.body;
-  // const roles = ["user"]
-  // const activeRole = "user"
 
   if (
     firstName == "" ||
@@ -19,13 +17,6 @@ export const registerUser = async (req, res) => {
       success: false,
       message: "No empty field allowed",
     });
-
-  // if(!roles.includes(activeRole)) {
-  //     return res.status(400).json({
-  //         message: "Active role must be one of the assigned roles",
-  //         success: false
-  //     })
-  // }
 
   try {
     const findUser = await User.findOne({ email });
@@ -43,31 +34,27 @@ export const registerUser = async (req, res) => {
       userType,
     });
 
-    // await newUser.save()
-
     const token = jwt.sign(
       {
         id: newUser._id,
         email: newUser.email,
         firstName: newUser.firstName,
         userType: newUser.userType,
-
-        // activeRole: checkUser.activeRole
       },
       "CLIENT_SECRET_KEY",
-      { expiresIn: "1s" }
+      { expiresIn: "24h" }
     );
 
-    return res
-      .status(200)
+    res
       .cookie("token", token, {
         httpOnly: true,
         secure: false,
+        sameSite: 'Lax'
       })
       .json({
         success: true,
         message: "User Registered successfully",
-        data: {
+        user: {
           id: newUser._id,
           firstName: newUser.firstName,
           lastName: newUser.lastName,
@@ -118,17 +105,16 @@ export const loginUser = async (req, res) => {
         email: checkUser.email,
         firstName: checkUser.firstName,
         userType: checkUser.userType,
-
-        // activeRole: checkUser.activeRole
       },
       "CLIENT_SECRET_KEY",
-      { expiresIn: "1s" }
+      { expiresIn: "24h" }
     );
 
     res
       .cookie("token", token, {
         httpOnly: true,
         secure: false,
+        sameSite: "Lax"
       })
       .json({
         success: true,
@@ -144,7 +130,7 @@ export const loginUser = async (req, res) => {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "SignUp failed, some error occured",
+      message: "Login failed, some error occured",
     });
   }
 };
@@ -167,6 +153,7 @@ export const authMiddleware = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
     req.user = decoded;
+    console.log(decoded);
     next();
   } catch (error) {
     res.status(401).json({
@@ -175,10 +162,3 @@ export const authMiddleware = async (req, res, next) => {
     });
   }
 };
-
-// export const registerUser = (req, res) => {
-
-// }
-// export const registerUser = (req, res) => {
-
-// }
