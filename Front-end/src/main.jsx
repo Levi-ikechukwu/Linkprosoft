@@ -121,12 +121,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <LoadingProvider>
-      <UserProvider>
+    <UserProvider>
+      <LoadingProvider>
         <Suspense fallback={<Loader />}>
           <RouterProvider router={router} />
         </Suspense>
-      </UserProvider>
-    </LoadingProvider>
+      </LoadingProvider>
+    </UserProvider>
   </StrictMode>
 );
