@@ -23,25 +23,31 @@ const SignUp = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await signup({ firstName, lastName, email, password, compName, userType });
-        console.log(response);
-        if (response.success && response.data === 'employer') {
-            toast.success(response.message);
-            setTimeout(() => {
-                navigate('/user-dashboard')
-            }, 2000);
+        try{
+            const response = await signup({ firstName, lastName, email, password, compName, userType });
+            console.log(response);
+            
+            if (response.success && response.user_type === 'employer') {
+                toast.success(response.message);
+                setTimeout(() => {
+                    navigate('/user-dashboard')
+                }, 2000);
+            }
+    
+            if (response.success && response.user_type === 'professional') {
+                toast.success(response.message);
+                setTimeout(() => {
+                    navigate('/employer-dashboard')
+                }, 2000);
+            }
+    
+            if (!response.success) {
+                toast.warning(response.message);
+            }
+        } catch(error){
+            console.error(error.message);
         }
 
-        if (response.success && response.data === 'professional') {
-            toast.success(response.message);
-            setTimeout(() => {
-                navigate('/employer-dashboard')
-            }, 2000);
-        }
-
-        if (!response.success) {
-            toast.warning(response.message);
-        }
     }
 
     const handleShowPassword = () => {
