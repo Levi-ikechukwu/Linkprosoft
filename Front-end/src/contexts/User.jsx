@@ -12,23 +12,21 @@ const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [signUpUserAs, setSignUpUserAs] = useState('');
 
-
-    //fetching user functionality
+    //fetching user
     useEffect(() => {
-        const fetchUser = async () => {
+    const fetchUser = async () => {
             try {
                 const res = await axios.get("http://localhost:5020/api/auth/check-auth", {
-                    withCredentials: true, // needed for cookie-based auth
+                    withCredentials: true,
                 });
-
                 setUser(res.data.user);
-
             } catch (err) {
-                setUser(false);
+                setUser(null);
+                localStorage.removeItem("token");
             } finally {
                 setLoading(false);
             }
-        };
+    };
 
         fetchUser();
     }, []);
@@ -39,20 +37,19 @@ const UserProvider = ({ children }) => {
     //signup-as professional functionality
     const handleProfessional = user_type => setSignUpUserAs(prev => prev = user_type);
 
-    // signup functionality
     const signup = async (formData) => {
         try {
             const res = await axios.post('http://localhost:5020/api/auth/register', formData, {
                 withCredentials: true,
             });
-            const { token, user } = res.data
+            const { user } = res.data
 
-            localStorage.setItem('token', token);
+            if(user){
+                setUser(user);
+            }
 
-
-            setUser(user);
             if (res.data.success) {
-                return { success: true, message: res.data.message, data: res.data.data.userType };
+                return { success: true, message: res.data.message, user_type: res.data.user.userType };
             } else {
                 return { success: false, message: res.data.message };
             }
@@ -62,18 +59,16 @@ const UserProvider = ({ children }) => {
         }
     }
 
-
     //login functionality
     const login = async (formData) => {
         try {
             const res = await axios.post('http://localhost:5020/api/auth/login', formData);
-            const { token, user } = res.data
+            const { user } = res.data
 
-            localStorage.setItem("token", token);
-            setUser(user);
-            if(user){
-                toast.success("Login successful!");
-            } else{
+            if (user) {
+                toast.success(res.data.message);
+                setUser(user);
+            } else {
                 toast.warning('Invalid email or password');
             }
 
@@ -100,8 +95,10 @@ const UserProvider = ({ children }) => {
             const res = await axios.post('http://localhost:5020/api/auth/logout', {}, {
                 withCredentials: true,
             });
-            console.log(res);
+
+            toast.info(res.data.message);
             setUser(null);
+            localStorage.removeItem('token');
 
         } catch (error) {
             console.error(error.message);
@@ -114,6 +111,7 @@ const UserProvider = ({ children }) => {
             signup,
             login,
             logout,
+            loading,
             signUpUserAs,
             handleEmployer,
             handleProfessional,
