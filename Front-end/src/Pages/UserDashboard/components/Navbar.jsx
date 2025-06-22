@@ -3,14 +3,16 @@ import profile from '../assets/profile.svg'
 import { IoMdSearch } from 'react-icons/io'
 import { RiMenu5Fill } from 'react-icons/ri'
 import { useAuth } from '../../../contexts/User'
-import axios from 'axios';
+import { ToastContainer } from 'react-toastify'
 
 const Navbar = ({ handleMenu }) => {
-  const { user } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    alert('functionality coming soon...');
+  const handleLogout = async () => {
+    setTimeout(() => {
+      logout();      
+    }, 2000);
   }
 
   return (
@@ -41,6 +43,7 @@ const Navbar = ({ handleMenu }) => {
             <RiMenu5Fill className='text-white text-2xl md:text-5xl' />
           </div>
         </div>
+        <ToastContainer />
       </header>
     </>
   )
