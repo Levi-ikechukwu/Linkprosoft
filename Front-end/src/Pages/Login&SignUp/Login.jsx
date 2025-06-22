@@ -36,7 +36,7 @@ const Login = () => {
     setError(formErrors)
 
     if (Object.keys(formErrors).length === 0) {
-      const res = await login({ email, password });
+      const res = await login({ email, password },);
       if (res.path === 'employer') {
         setTimeout(() => {
           navigate("/user-dashboard");
